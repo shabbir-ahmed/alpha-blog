@@ -16,7 +16,7 @@ class ArticlesController < ApplicationController
     def create
         @article = Article.new(article_params)
         if @article.save
-            flash[:notice] = "Article was successfully created"
+            flash[:success] = "Article was successfully created"
             redirect_to article_path(@article)
         else
             render 'new'
@@ -35,7 +35,7 @@ class ArticlesController < ApplicationController
         @article = Article.find(params[:id])
         respond_to do |format|
             if @article.update_attributes(article_params)
-                flash[:notice] = 'Article was successfully updated.'
+                flash[:success] = 'Article was successfully updated.'
                 format.html { redirect_to(@article) }
                 format.xml  { head :ok }
             else
