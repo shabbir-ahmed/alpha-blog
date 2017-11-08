@@ -19,8 +19,9 @@ class UsersController < ApplicationController
   
     respond_to do |format|
       if @user.save
+        session[:user_id] = @user.id
         flash[:success] = 'Welcome to the 3S blog'
-        format.html { redirect_to articles_path }
+        format.html { redirect_to user_path(@user) }
         format.xml  { render :xml => @user, :status => :created, :location => @user }
       else
         format.html { render :action => "new" }
