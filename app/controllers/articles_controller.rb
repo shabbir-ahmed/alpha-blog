@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
     before_action :require_user, except: [:index, :show]
-    # before_action :require_same_user, only: [:edit, :update, :destroy]
+    before_action :require_same_user, only: [:edit, :update, :destroy]
     
     def index
         @articles = Article.paginate(page: params[:page], per_page: 10).order(id: :desc)
@@ -70,11 +70,11 @@ class ArticlesController < ApplicationController
         params.require(:article).permit(:title, :description)
     end
     
-    # def require_same_user
-    #     if current_user.id != @article.user
-    #         flash[:danger] = "You can only delete your own article"
-    #         redirect_to root_path
-    #     end
+    def require_same_user
+        if !current_user.admin?
+            flash[:danger] = "You can only delete your own article"
+            redirect_to root_path
+        end
         
-    # end
+    end
 end
