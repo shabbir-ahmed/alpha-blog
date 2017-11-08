@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], per_page: 10)
   
     respond_to do |format|
       format.html # index.html.erb
@@ -49,10 +49,11 @@ class UsersController < ApplicationController
   
   def show
     @user = User.find(params[:id])
+    @user_articles = @user.articles.paginate(page: params[:page], per_page: 10)
   
-    respond_to do |wants|
-      wants.html # show.html.erb
-      wants.xml  { render :xml => @user }
+    respond_to do |format|
+      format.html # show.html.erb
+      format.xml  { render :xml => @user }
     end
   end
   
