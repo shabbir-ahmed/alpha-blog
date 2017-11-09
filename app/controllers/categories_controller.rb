@@ -67,6 +67,7 @@ class CategoriesController < ApplicationController
   
   def set_params
     @category = Category.find(params[:id])
+    @category_articles = @category.articles.paginate(page: params[:page], per_page: 5)
   end
   
   def require_admin
